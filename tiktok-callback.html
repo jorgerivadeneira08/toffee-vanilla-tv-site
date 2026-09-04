@@ -14,6 +14,10 @@
       <p class="eyebrow">TOFFEE &amp; VANILLA TV</p>
       <h1 id="title">Completing TikTok connection…</h1>
       <p class="lead" id="message">You may return to the secure Hamster TV setup.</p>
+      <p class="tagline" id="codeNotice" hidden>
+        Copy the one-time authorization code below into the local Hamster TV setup, then close this page.
+      </p>
+      <pre id="authorizationCode" hidden aria-label="TikTok authorization code"></pre>
       <p class="tagline">This page does not publish videos or collect personal information.</p>
     </main>
     <footer>
@@ -25,12 +29,17 @@
       const params = new URLSearchParams(window.location.search);
       const title = document.getElementById('title');
       const message = document.getElementById('message');
+      const codeNotice = document.getElementById('codeNotice');
+      const authorizationCode = document.getElementById('authorizationCode');
       if (params.get('error')) {
         title.textContent = 'TikTok connection was not completed';
         message.textContent = 'No videos were published. Return to Hamster TV and try again when ready.';
       } else if (params.get('code')) {
         title.textContent = 'TikTok connection approved';
-        message.textContent = 'You can close this page and return to Hamster TV. No video has been published.';
+        message.textContent = 'No video has been published. Copy this one-time code into the local Hamster TV setup.';
+        codeNotice.hidden = false;
+        authorizationCode.hidden = false;
+        authorizationCode.textContent = params.get('code');
         // Avoid leaving the short-lived authorization code in browser history.
         window.history.replaceState({}, document.title, window.location.pathname);
       } else {
