@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="description" content="TikTok authorization return page for Toffee & Vanilla TV.">
+    <title>TikTok connected | Toffee & Vanilla TV</title>
+    <link rel="stylesheet" href="site.css">
+  </head>
+  <body>
+    <main class="card">
+      <img class="avatar" src="toffee-vanilla.png" alt="Toffee and Vanilla">
+      <p class="eyebrow">TOFFEE &amp; VANILLA TV</p>
+      <h1 id="title">Completing TikTok connection…</h1>
+      <p class="lead" id="message">You may return to the secure Hamster TV setup.</p>
+      <p class="tagline">This page does not publish videos or collect personal information.</p>
+    </main>
+    <footer>
+      <a href="privacy.html">Privacy Policy</a>
+      <span>·</span>
+      <a href="terms.html">Terms of Service</a>
+    </footer>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const title = document.getElementById('title');
+      const message = document.getElementById('message');
+      if (params.get('error')) {
+        title.textContent = 'TikTok connection was not completed';
+        message.textContent = 'No videos were published. Return to Hamster TV and try again when ready.';
+      } else if (params.get('code')) {
+        title.textContent = 'TikTok connection approved';
+        message.textContent = 'You can close this page and return to Hamster TV. No video has been published.';
+        // Avoid leaving the short-lived authorization code in browser history.
+        window.history.replaceState({}, document.title, window.location.pathname);
+      } else {
+        title.textContent = 'TikTok connection page';
+        message.textContent = 'This page is used only when you choose to connect TikTok to Hamster TV.';
+      }
+    </script>
+  </body>
+</html>
